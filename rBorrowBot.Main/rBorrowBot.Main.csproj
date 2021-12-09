@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>winexe</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <AssemblyName>rBorrowBot.Main</AssemblyName>
+        <RootNamespace>rBorrowBot.Main</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\rBorrowBot.Discord\rBorrowBot.Discord.csproj" />
+      <ProjectReference Include="..\rBorrowBot.SubredditMonitor\rBorrowBot.SubredditMonitor.csproj" />
+      <ProjectReference Include="..\rBorrowBot.Discord\rBorrowBot.Discord.csproj" />
+      <ProjectReference Include="..\rBorrowBot.RedditApiEstablisher\rBorrowBot.RedditApiEstablisher.csproj" />
+      <ProjectReference Include="..\rBorrowBot.SubredditMonitor\rBorrowBot.SubredditMonitor.csproj" />
+      <ProjectReference Include="..\rBorrowBot.Discord\rBorrowBot.Discord.csproj" />
+      <ProjectReference Include="..\rBorrowBot.RedditApiEstablisher\rBorrowBot.RedditApiEstablisher.csproj" />
+      <ProjectReference Include="..\rBorrowBot.SubredditMonitor\rBorrowBot.SubredditMonitor.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="DSharpPlus" Version="4.0.1" />
+    </ItemGroup>
+
+</Project>

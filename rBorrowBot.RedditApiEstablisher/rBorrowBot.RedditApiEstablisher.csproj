@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Reddit" Version="1.5.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\rBorrowBot.Resources\rBorrowBot.Resources.csproj" />
+      <ProjectReference Include="..\rBorrowBot.Resources\rBorrowBot.Resources.csproj" />
+      <ProjectReference Include="..\rBorrowBot.Resources\rBorrowBot.Resources.csproj" />
+    </ItemGroup>
+
+</Project>
