@@ -24,7 +24,9 @@ public class DiscordBot {
     public DiscordBot() {
         _botClient = new DiscordClient(new DiscordConfiguration {
             Token = Resources.Resources.ReadAllText("discord_token.txt"),
-            TokenType = TokenType.Bot
+            TokenType = TokenType.Bot,
+            Intents = DiscordIntents.AllUnprivileged | DiscordIntents.MessageContents,
+            AutoReconnect = true
         });
         _botClient.ConnectAsync().Wait();
 
@@ -36,7 +38,9 @@ public class DiscordBot {
     private void SetOnMessageCreated() {
         _botClient.MessageCreated += (client, e) => {
             var text = e.Message.Content;
+            Console.WriteLine($"Message Created: {text}");
             if(text.Equals(SetHistoriesKeyword)) {
+                Console.WriteLine("histories");
                 _historiesChannel = e.Channel;
                 Resources.Resources.WriteTo(HistoriesChannelResourceName, _historiesChannel.Id.ToString());
                 _botClient.SendMessageAsync(_historiesChannel, $"Setting #{_historiesChannel.Name} to active channel for users with histories");
@@ -88,6 +92,7 @@ public class DiscordBot {
     }
     
     public void Handle(List<Post> newPosts) {
+        Console.WriteLine("Handling...");
         if(_historiesChannel == null && _noHistoriesChannel == null) {
             return;
         }
@@ -99,10 +104,13 @@ public class DiscordBot {
         }).ToList();
 
         if(!filteredPosts.Any()) {
+            Console.WriteLine("No posts to handle.");
             return;
         }
+        Console.WriteLine("Posts to handle.");
         
         var users = new HashSet<string>(from post in filteredPosts select post.Author);
+        
         var userHistories = users.ToDictionary(user => user, GetUserHistory);
 
         var postsFromUsersWithHistories =
@@ -117,7 +125,8 @@ public class DiscordBot {
                    $"Num requests: {userHistories[post.Author]["req"].Count()}\n" +
                    $"Num paid: {userHistories[post.Author]["paid"].Count()}\n" +
                    $"Num unpaid: {userHistories[post.Author]["unpaid"].Count()}\n" +
-                   $"https://old.reddit.com{post.Permalink}";
+                   $"https://old.reddit.com{post.Permalink}\n" +
+                   $"{post.Comments.GetComments().Find(comment => comment.Author.Equals("LoansBot") && comment.Depth == 1)?.Body}";
         var withoutHistories =
             from post in postsFromUsersWithoutHistories
             select $"Date/time: {post.Created.ToString("s", CultureInfo.InvariantCulture)}\n" +
@@ -125,12 +134,14 @@ public class DiscordBot {
                    $"Num requests: {userHistories[post.Author]["req"].Count()}\n" +
                    $"Num paid: {userHistories[post.Author]["paid"].Count()}\n" +
                    $"Num unpaid: {userHistories[post.Author]["unpaid"].Count()}\n" +
-                   $"https://old.reddit.com{post.Permalink}";
+                   $"https://old.reddit.com{post.Permalink}" +
+                   $"{post.Comments.GetComments().Find(comment => comment.Author.Equals("LoansBot") && comment.Depth == 1)?.Body}";
 
         if(_historiesChannel != null) {
             foreach(var s in withHistories) {
                 Console.WriteLine($"Sending:\n{s}");
                 _botClient.SendMessageAsync(_historiesChannel, s).Wait();
+                
             }
         }
 
