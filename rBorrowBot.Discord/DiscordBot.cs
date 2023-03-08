@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.Entities;
 using Reddit.Controllers;
+using Reddit.Exceptions;
 using static rBorrowBot.RedditApiEstablisher.RedditApiEstablisher;
 
 namespace rBorrowBot.Discord {
@@ -81,14 +82,21 @@ public class DiscordBot {
 
         var api = EstablishApiIfNecessaryAndGet().Result;
         var lastPostFullname = Resources.Resources.ReadAllText(LastPostResourceName);
-        var postsFromSearch = api.GetPosts(new List<string> { lastPostFullname });
-        if(!postsFromSearch.Any()) {
-            return;
+        List<Post> postsFromSearch;
+        try {
+            postsFromSearch = api.GetPosts(new List<string> { lastPostFullname });
+            if(!postsFromSearch.Any()) {
+                return;
+            }
+            var lastPost = postsFromSearch[0];
+            var subredditName = lastPost.Subreddit;
+            var subreddit = api.Subreddit(subredditName);
+            Handle(subreddit.Posts.GetNew(before: lastPostFullname));
+        } catch(RedditNotFoundException e) {
+            Console.WriteLine(e.ToString());
+            Console.WriteLine("Encountered exception when loading missed posts. Loading last 10 posts.");
+            Handle(api.Subreddit("borrow").Posts.GetNew(limit: 10)); // TODO: fix this shit
         }
-        var lastPost = postsFromSearch[0];
-        var subredditName = lastPost.Subreddit;
-        var subreddit = api.Subreddit(subredditName);
-        Handle(subreddit.Posts.GetNew(before: lastPostFullname));
     }
     
     public void Handle(List<Post> newPosts) {

@@ -5,7 +5,7 @@ using static rBorrowBot.RedditApiEstablisher.RedditApiEstablisher;
 
 namespace rBorrowBot.Main {
 public static class RBorrowBot {
-    private const string Subreddit = "borrow";
+    public const string Subreddit = "borrow";
     
     public static void Main(string[] args) {
         Console.WriteLine("Hi");
