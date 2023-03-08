@@ -10,12 +10,7 @@
     <ItemGroup>
       <ProjectReference Include="..\rBorrowBot.Discord\rBorrowBot.Discord.csproj" />
       <ProjectReference Include="..\rBorrowBot.SubredditMonitor\rBorrowBot.SubredditMonitor.csproj" />
-      <ProjectReference Include="..\rBorrowBot.Discord\rBorrowBot.Discord.csproj" />
       <ProjectReference Include="..\rBorrowBot.RedditApiEstablisher\rBorrowBot.RedditApiEstablisher.csproj" />
-      <ProjectReference Include="..\rBorrowBot.SubredditMonitor\rBorrowBot.SubredditMonitor.csproj" />
-      <ProjectReference Include="..\rBorrowBot.Discord\rBorrowBot.Discord.csproj" />
-      <ProjectReference Include="..\rBorrowBot.RedditApiEstablisher\rBorrowBot.RedditApiEstablisher.csproj" />
-      <ProjectReference Include="..\rBorrowBot.SubredditMonitor\rBorrowBot.SubredditMonitor.csproj" />
     </ItemGroup>
 
     <ItemGroup>

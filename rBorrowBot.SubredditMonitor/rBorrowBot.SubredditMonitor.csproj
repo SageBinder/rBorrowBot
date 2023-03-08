@@ -10,8 +10,6 @@
       <ProjectReference Include="..\rBorrowBot.Discord\rBorrowBot.Discord.csproj" />
       <ProjectReference Include="..\rBorrowBot.Resources\rBorrowBot.Resources.csproj" />
       <ProjectReference Include="..\rBorrowBot.RedditApiEstablisher\rBorrowBot.RedditApiEstablisher.csproj" />
-      <ProjectReference Include="..\rBorrowBot.RedditApiEstablisher\rBorrowBot.RedditApiEstablisher.csproj" />
-      <ProjectReference Include="..\rBorrowBot.RedditApiEstablisher\rBorrowBot.RedditApiEstablisher.csproj" />
     </ItemGroup>
 
     <ItemGroup>
